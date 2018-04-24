@@ -1,0 +1,103 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="css/index.css">
+
+<script type="text/javascript" src="js/utils.js" defer></script>
+<script type="text/javascript" src="js/client-http.js" defer></script>
+<script type="text/javascript" src="js/client-view.js" defer></script>
+<script type="text/javascript" src="js/main.js" defer></script>
+
+<script type="text/javascript">
+	/**/
+</script>
+
+<style>
+/**/
+</style>
+</head>
+
+<body style="background: #333; color: #fff">
+    <div id="content">
+        <div id="header">
+            <div class="header-box">
+                <strong>CONFIGURATION</strong>
+                <ul>
+                    <li class="title">Apache</li>
+                    <li>Protocol: http</li>
+                    <li>Host: <span id="conf.apache.hostname"></span></li>
+                    <li>Port: <span id="conf.apache.port"></span></li>
+                    <li>Endpoint: /api/app</li>
+                    <li class="title">Apache mod_jk</li>
+                    <li>jkmanager: <a href="http://localhost:1234/jkmanager/" target="_blank">link</a></li>
+                </ul>
+            </div>
+            <div class="header-box">
+                <strong>AVAILABLE API</strong>
+                <ul>
+                    <li class="title">GET Methods</li>
+                    <li>/greeting</li>
+                    <li class="title">PUT Methods</li>
+                    <li>/disableGreetingApi</li>
+                </ul>
+            </div>
+            <div class="header-box">
+                <strong>STATUS</strong>
+                <ul>
+                    <li class="title">Sticky session info:</li>
+                    <li>sessionid: <span id="status.sessionid" class="status-value">none</span></li>
+                    <li>worker: <span id="status.sticky-session-worker" class="status-value">none</span></li>
+                    <li>ajp_port: <span id="status.sticky-session-worker.ajp" class="status-value">none</span></li>
+                    <li class="title">Node/worker info:</li>
+                    <li>worker 1: <span id="worker-info-1" class="status-value">no info</span></li>
+                    <li>worker 2: <span id="worker-info-2" class="status-value">no info</span></li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div id="left">
+            <strong>TRY IT OUT</strong>
+
+            <div class="method-box">
+                <span data-method="get">get</span> /api/app/greeting <br />
+                <ul>
+                    <li class="title">Parameters:</li>
+                    <li>none</li>
+                    <li class="title">Actions:</li>
+                    <li class="action"><button onClick="sendAppGreetingRequest()">SEND</button></li>
+                </ul>
+
+            </div>
+
+            <div class="method-box">
+                <span data-method="put">put</span> /api/app/disableGreetingApi <br />
+                <ul>
+                    <li class="title">Parameters:</li>
+                    <li>durationTimeSetting (default value: 60s)</li>
+                    <li class="title">Actions</li>
+                    <li class="action">
+                        <input type="number" min="1" step="1" id="duration-time-setting" placeholder="60s - durationTimeSetting " />
+                        <button onClick="sendAppDisableGreetingApiRequest('duration-time-setting')">SEND</button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="right">
+            <strong>REQUEST/RESPONSE LOGS:</strong>
+            <div id="logs.request-response.container">
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

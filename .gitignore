@@ -20,3 +20,28 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Dirs
+bin
+build
+target
+tmp
+logs
+log
+
+# IDE
+*.sublime-*
+/scratch
+.gradle
+README.html
+*.iml
+.idea
+.classpath
+.project
+.settings
+
+# Other
+*.sw?
+.#*
+*#
+*~
