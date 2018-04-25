@@ -23,6 +23,7 @@ $ sudo service apache2 status
 You should see: `apache2 is running` or `apache2 is not running`.
 
 Below table shows paths to files with important things to this PoC:
+
 | File path | Description |
 | --- | --- |
 | /etc/apache2 | Directory with home path to Apache httpd  |
@@ -38,6 +39,7 @@ Below table shows paths to files with important things to this PoC:
 
 
 Below table shows few simple commands to manage an Apache httpd server:
+
 | Command | Description |
 | --- | --- |
 | sudo service apache2 status | Check status |
