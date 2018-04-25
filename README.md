@@ -24,13 +24,13 @@ You should see: `apache2 is running` or `apache2 is not running`.
 
 Below table shows paths to files with important things to this PoC:
 | File path | Description |
-| ------ | ------ |
+| --- | --- |
 | /etc/apache2 | Directory with home path to Apache httpd  |
 | /etc/apache2/apache2.conf | Main Apache httpd configuration |
 | /etc/apache2/sites-available/000-default.conf | Virtualhost configuration |
 | /etc/apache2/mods-enabled/jk.conf | Mod_jk configuration file |
 | /var/logs/apache2/ | Directory with Apache httpd and mod_jk logs |
-| Custom paths
+| Custom paths | - |
 | /etc/apache2/conf/workers.properties | Mod_jk workers configuration  |
 | /var/logs/apache2/local-apache.wlodi.net_error.log | Error logs only for our virtualhost |
 | /var/logs/apache2/local-apache.wlodi.net_access.log | Access logs only for our virtualhost |
@@ -39,7 +39,7 @@ Below table shows paths to files with important things to this PoC:
 
 Below table shows few simple commands to manage an Apache httpd server:
 | Command | Description |
-| ------ | ------ |
+| --- | --- |
 | sudo service apache2 status | Check status |
 | sudo service apache2 restart | Restart Apache |
 | sudo service apache2 start | Start Apache |
@@ -55,7 +55,7 @@ AcceptFilter https none
 AcceptFilter http none
 ```
 
-# Apache httpd configuration
+# 2. Apache httpd configuration
 
 Default Apache httpd configuration includes `000-default.conf` file.  So we append our new virtualhost to this file.
 
@@ -101,7 +101,7 @@ Final files
 [000-default.conf](apache/000-default.conf)
 [apache2.conf](apache/apache2.conf)
 
-# mod_jk configuration
+# 3. mod_jk configuration
 
 Firstly change the path to workers in main configuration `jk.conf`, replace current value for JkWorkersFile to:
 
@@ -147,7 +147,7 @@ Final files
 [jk.conf](apache/jk.conf)
 [workers.properties](apache/workers.properties)
 
-# HTML/JS Client
+# 4. HTML/JS Client
 
 To install client application you can:
 - Copy http-client from this repository to /var/www/html/
@@ -169,7 +169,7 @@ port: 1234
 
 How the client works, you can check the [demo.gif](demo/lb-mod-jk-demo.gif).
 
-# Spring Boot Application
+# 5. Spring Boot Application
 
 To run application, please clone or download this project, then type following commands:
 ```sh
@@ -184,10 +184,10 @@ SpringApplication.run( Application.class, "--node.ajpPort=8019", "--node.httpPor
 ```
 If you would like to change it, please remember to update mod_jk workers configuration.
 
-# Tests and tests conclusion
+# 6. Tests and tests conclusion
 
 > TODO
 
-# Compatibility
+# 7. Compatibility
 
 > TODO missing version of mod_jk, apache htppd, OS etc.
