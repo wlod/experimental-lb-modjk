@@ -166,7 +166,7 @@ http://host:port/http-client/client.html
 Host and port for our configuration:
 ```
 host = 127.0.0.1
-port: 1234
+port = 1234
 ```
 
 How the client works, you can check the [demo.gif](docs/demo/lb-mod-jk-demo.gif).

@@ -54,13 +54,12 @@ public class GreetingController {
 
         Greeting greeting = new Greeting( counter.incrementAndGet(), String.format( RESPONSE_TEMPLATE, name ), app.getNodeInformation() );
 
-        return createSuccesResponseEntity( greeting );
+        return createSuccessResponseEntity( greeting );
     }
 
     /**
      * 
-     * @param responseTime
-     *            - response delay (in seconds)
+     * @param durationTimeSetting
      * @return status - status for operation: HttpStatus.OK after set value for delay HttpStatus.METHOD_NOT_ALLOWED when the value is already set
      */
     @RequestMapping ( value = "/disableGreetingApi" , method = RequestMethod.PUT )
@@ -87,10 +86,10 @@ public class GreetingController {
             }
         }.start();
 
-        return createSuccesResponseEntity( "disableGreetingApi: on" );
+        return createSuccessResponseEntity( "disableGreetingApi: on" );
     }
 
-    private ResponseEntity< ? > createSuccesResponseEntity( Object object ) {
+    private ResponseEntity< ? > createSuccessResponseEntity( Object object ) {
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set( "Set-Cookie", String.format( JSESSIONID_TEMPLATE, app.getAJP_PORT(), app.getJVM_ROUTE() ) );
