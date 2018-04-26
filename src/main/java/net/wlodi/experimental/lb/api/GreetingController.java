@@ -54,10 +54,7 @@ public class GreetingController {
 
         Greeting greeting = new Greeting( counter.incrementAndGet(), String.format( RESPONSE_TEMPLATE, name ), app.getNodeInformation() );
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set( "Set-Cookie", String.format( JSESSIONID_TEMPLATE, app.getAJP_PORT(), app.getJVM_ROUTE() ) );
-
-        return new ResponseEntity<>( greeting, responseHeaders, HttpStatus.OK );
+        return createSuccesResponseEntity( greeting );
     }
 
     /**
@@ -90,6 +87,14 @@ public class GreetingController {
             }
         }.start();
 
-        return new ResponseEntity<>( HttpStatus.OK );
+        return createSuccesResponseEntity( "disableGreetingApi: on" );
+    }
+
+    private ResponseEntity< ? > createSuccesResponseEntity( Object object ) {
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set( "Set-Cookie", String.format( JSESSIONID_TEMPLATE, app.getAJP_PORT(), app.getJVM_ROUTE() ) );
+
+        return new ResponseEntity<>( object, responseHeaders, HttpStatus.OK );
     }
 }

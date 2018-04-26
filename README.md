@@ -1,6 +1,6 @@
 # Experiment: Apache httpd + mod_jk + two instances of a simple Spring Boot application 
 
-# 1. Quick instruction to install Apache httpd with mod_jk
+## 1. Quick instruction to install Apache httpd with mod_jk
 
 Below instruction based on Ubuntu or Windows 10 with Linux Bash Shell (Ubuntu) (https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 
@@ -15,7 +15,7 @@ $ sudo apt-get install libapache2-mod-jk
 ```
 And that's it!
 
-You can check the instllation by type
+You can check the installation by type
 ```sh
 $ sudo service apache2 status
 ```
@@ -57,7 +57,7 @@ AcceptFilter https none
 AcceptFilter http none
 ```
 
-# 2. Apache httpd configuration
+## 2. Apache httpd configuration
 
 Default Apache httpd configuration includes `000-default.conf` file.  So we append our new virtualhost to this file.
 
@@ -99,11 +99,11 @@ Next, add whole VirtualHost on port 1234:
 
 > TODO missing description
 
-Final files
-[000-default.conf](apache/000-default.conf)
-[apache2.conf](apache/apache2.conf)
+Final files:
+- [000-default.conf](apache/000-default.conf)
+- [apache2.conf](apache/apache2.conf)
 
-# 3. mod_jk configuration
+## 3. mod_jk configuration
 
 Firstly change the path to workers in main configuration `jk.conf`, replace current value for JkWorkersFile to:
 
@@ -145,13 +145,13 @@ worker.app-worker2.port=8019
 
 > TODO missing description
 
-Final files
-[jk.conf](apache/jk.conf)
-[workers.properties](apache/workers.properties)
+Final files:
+- [jk.conf](apache/jk.conf)
+- [workers.properties](apache/workers.properties)
 
-# 4. HTML/JS Client
+## 4. HTML/JS Client
 
-To install client application you can:
+To install client application you can do one of two options:
 - Copy http-client from this repository to /var/www/html/
 - Create symbolic link ({path_to_project} is path to directory with this repository):
 ```
@@ -169,9 +169,9 @@ host = 127.0.0.1
 port: 1234
 ```
 
-How the client works, you can check the [demo.gif](demo/lb-mod-jk-demo.gif).
+How the client works, you can check the [demo.gif](docs/demo/lb-mod-jk-demo.gif).
 
-# 5. Spring Boot Application
+## 5. Spring Boot Application
 
 To run application, please clone or download this project, then type following commands:
 ```sh
@@ -186,10 +186,37 @@ SpringApplication.run( Application.class, "--node.ajpPort=8019", "--node.httpPor
 ```
 If you would like to change it, please remember to update mod_jk workers configuration.
 
-# 6. Tests and tests conclusion
+## 6. Tests and tests conclusion
 
 > TODO
 
-# 7. Compatibility
+### 6.1 Check mod_jk and fail_on_status
+
+One of important thing is worker configuration for `fail_on_status` in `workers.properties`.
+
+This property based an HTTP status code that will cause a worker to fail if returned from our Spring Application.
+
+Currently configuration is:
+```sh
+worker.ajptemplate.fail_on_status=500,503
+```
+Currently HTTP status is `405` after second invoke API: `/api/app/disableGreetingApi` on the same worker. So for our client the API `/api/app/disableGreetingApi` is still available.
+
+![mod_jk-fail_on_status-repo-configuration](docs/experimental-lb-modjk-mod_jk-fail_on_status-repo-configuration.png)
+
+For test added `405` status to configuration:
+```sh
+worker.ajptemplate.fail_on_status=405,500,503
+```
+
+After change:
+1. First call to `/api/app/disableGreetingApi` returns status `200` and the same cookies value like a request (first node).
+2. Second call to `/api/app/disableGreetingApi` returns status `200` and the new cookies value like a request (second node).
+2. Third call to `/api/app/disableGreetingApi` returns status `503` from Apache (both nodes are unavailable).
+
+![modjk-mod_jk-fail_on_status-add-405](docs/experimental-lb-modjk-mod_jk-fail_on_status-add-405.png) 
+
+
+## 7. Compatibility
 
 > TODO missing version of mod_jk, apache htppd, OS etc.
